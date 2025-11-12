@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: cex-websocket-push
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: cex-websocket-push
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 3
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
+      discovery:
+        namespace: public
+        group: DEFAULT_GROUP
+      config:
+        namespace: public
+        group: DEFAULT_GROUP
+        file-extension: yaml
+
+server:
+  port: 9006
+
+logging:
+  level:
+    root: INFO
+    com.cexpay: DEBUG

@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: cex-wallet-service
+  datasource:
+    url: jdbc:postgresql://43.138.23.51:5432/cex_platform
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 0
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
+      discovery:
+        namespace: public
+        group: DEFAULT_GROUP
+      config:
+        namespace: public
+        group: DEFAULT_GROUP
+        file-extension: yaml
+
+server:
+  port: 9002
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: assign_id
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    root: INFO
+    com.cexpay: DEBUG

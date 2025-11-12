@@ -1,0 +1,58 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: cex-gateway
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
+      discovery:
+        namespace: public
+        group: DEFAULT_GROUP
+      config:
+        namespace: public
+        group: DEFAULT_GROUP
+        file-extension: yaml
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: user-service
+          uri: lb://cex-user-service
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - StripPrefix=1
+        - id: wallet-service
+          uri: lb://cex-wallet-service
+          predicates:
+            - Path=/wallet-service/**
+          filters:
+            - StripPrefix=1
+        - id: order-service
+          uri: lb://cex-order-service
+          predicates:
+            - Path=/order-service/**
+          filters:
+            - StripPrefix=1
+        - id: market-data-service
+          uri: lb://cex-market-data-service
+          predicates:
+            - Path=/market-service/**
+          filters:
+            - StripPrefix=1
+
+server:
+  port: 8080
+
+jwt:
+  secret: your-secret-key-must-be-at-least-32-characters-long-here
+
+logging:
+  level:
+    root: INFO
+    com.cexpay: DEBUG

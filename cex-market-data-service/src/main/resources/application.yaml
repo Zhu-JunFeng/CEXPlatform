@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: cex-market-data-service
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: cex-market-data-service
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 2
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
+      discovery:
+        namespace: public
+        group: DEFAULT_GROUP
+      config:
+        namespace: public
+        group: DEFAULT_GROUP
+        file-extension: yaml
+
+server:
+  port: 9005
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    root: INFO
+    com.cexpay: DEBUG
