@@ -10,8 +10,11 @@ public class OrderBook {
 
     private final String symbol;
 
+    // TreeMap 默认是升序排列 key
+    // 买单
     private final NavigableMap<BigDecimal, PriceLevel> bids = new TreeMap<>(Comparator.reverseOrder());
 
+    // 卖单
     private final NavigableMap<BigDecimal, PriceLevel> asks = new TreeMap<>();
 
     // global quick lookup
