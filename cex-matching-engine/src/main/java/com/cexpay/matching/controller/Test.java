@@ -9,6 +9,60 @@ public class Test {
         System.out.println(Arrays.toString(res));
     }
 
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> level = new ArrayList<>(size);
+
+            while (size-- > 0) {
+                TreeNode node = queue.poll();
+                level.add(node.val);
+
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+
+            res.add(0, level);
+        }
+
+        return res;
+    }
+
+    /**
+     * 输入: nums = [1,2,3,4,5,6,7], k = 3
+     * 输出: [5,6,7,1,2,3,4]
+     * 解释:
+     * 向右旋转 1 步: [7,1,2,3,4,5,6]
+     * 向右旋转 2 步: [6,7,1,2,3,4,5]
+     * 向右旋转 3 步: [5,6,7,1,2,3,4]
+     */
+    public static void rotate(int[] nums, int k) {
+        int len = nums.length;
+        k = k % len;
+        reverse(nums, 0, len - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, len - 1);
+    }
+
+    /**
+     * 反转数组
+     */
+    public static void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
     /**
      * 输入：intervals = [[1,3],[2,6],[8,10],[15,18]]
      * 输出：[[1,6],[8,10],[15,18]]
@@ -37,10 +91,10 @@ public class Test {
     /**
      * 输入: s = "()"
      * 输出: true
-     *
+     * <p>
      * 输入: s = "()[]{}"
      * 输出: true
-     *
+     * <p>
      * 输入: s = "(]"
      * 输出: false
      */
