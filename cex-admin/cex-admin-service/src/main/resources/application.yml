@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: cex-exchange-engine
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://43.138.23.51:3306/cex-admin?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+
+  profiles:
+    active: dev   # ???????? test/prod
+
+  config:
+    import: nacos:43.138.23.51:8848?namespace=public&group=DEFAULT_GROUP&extension=yaml
+    # ?? Nacos ?????? optional:nacos:...
+
+  cloud:
+    nacos:
+      config:
+        server-addr: 43.138.23.51:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        username: nacos        # Nacos ??????
+        password: nacos        # Nacos ?????
+        refresh-enabled: true  # ??????
+      discovery:
+        server-addr: 43.138.23.51:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        username: nacos        # Nacos ??????
+        password: nacos        # Nacos ?????
+# ============================================================
+# ??
+# ============================================================
+logging:
+  level:
+    root: INFO
+    com.cex: DEBUG

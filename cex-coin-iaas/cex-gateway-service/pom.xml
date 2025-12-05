@@ -4,23 +4,31 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>com.cexpay</groupId>
-        <artifactId>cex-platform</artifactId>
+        <artifactId>cex-coin-iaas</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-
     </parent>
 
-    <artifactId>cex-matching-engine</artifactId>
-    <name>cex-matching-engine</name>
-    <description>Order matching engine with in-memory index</description>
-    <modules>
-        <module>cex-matching-engine-api</module>
-        <module>cex-matching-engine-service</module>
-    </modules>
-    <packaging>pom</packaging>
+    <artifactId>cex-gateway-service</artifactId>
+    <name>cex-gateway-service</name>
+    <description>API Gateway for CEX Platform</description>
 
+    <dependencies>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cexpay</groupId>
+            <artifactId>cex-coin-common</artifactId>
+            <version>${reversion}</version>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <plugins>

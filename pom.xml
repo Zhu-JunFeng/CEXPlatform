@@ -7,7 +7,7 @@
 
     <groupId>com.cexpay</groupId>
     <artifactId>cex-platform</artifactId>
-    <version>1.0.0</version>
+    <version>${reversion}</version>
     <packaging>pom</packaging>
     <name>CEX Platform</name>
     <description>Centralized Exchange Platform - Microservices Architecture</description>
@@ -15,18 +15,22 @@
 
     <!-- 子模块 -->
     <modules>
-        <module>cex-common</module>
-        <module>cex-gateway</module>
-        <module>cex-user-service</module>
-        <module>cex-wallet-service</module>
-        <module>cex-order-service</module>
+        <module>cex-coin-common</module>
         <module>cex-matching-engine</module>
-        <module>cex-market-data-service</module>
-        <module>cex-websocket-push</module>
+        <module>cex-coin-push</module>
+        <module>cex-task</module>
+        <module>cex-coin-iaas</module>
+        <module>cex-admin</module>
+        <module>cex-member</module>
+        <module>cex-finance</module>
+        <module>cex-statistics</module>
+        <module>cex-exchange</module>
     </modules>
 
     <!-- 版本管理 -->
     <properties>
+        <reversion>0.0.1-SNAPSHOT</reversion>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -57,6 +61,15 @@
 
         <!-- Testing -->
         <junit.version>5.9.3</junit.version>
+
+        <spring.cloud.starter.oauth2.version>2.2.5.RELEASE</spring.cloud.starter.oauth2.version>
+
+        <!-- mysql -->
+        <mysql.java>8.0.33</mysql.java>
+
+        <!-- mybatis-plus-boot-starter-->
+        <mybatis-plus-boot-starter.version>3.5.3.2</mybatis-plus-boot-starter.version>
+
     </properties>
 
     <!-- 依赖管理 -->
@@ -101,6 +114,13 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.java}</version>
             </dependency>
 
             <!-- Lombok -->
@@ -184,17 +204,28 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
-
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-oauth2 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-oauth2</artifactId>
+                <version>${spring.cloud.starter.oauth2.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+
         </dependencies>
+
     </dependencyManagement>
 
     <!-- 通用依赖 -->
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -203,44 +234,79 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
         </dependency>
+
+
     </dependencies>
 
     <!-- 构建插件 -->
     <build>
         <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>flatten-maven-plugin</artifactId>-->
+<!--                <version>1.4.1</version>-->
+<!--                <configuration>-->
+<!--                    <updatePomFile>true</updatePomFile>-->
+<!--                    <flattenMode>resolveCiFriendliesOnly</flattenMode>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>flatten</id>-->
+<!--                        <phase>process-resources</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>flatten</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>flatten.clean</id>-->
+<!--                        <phase>clean</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>clean</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>COMPLEXITY</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.40</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -266,5 +332,10 @@
             <name>Maven Central</name>
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
+        <repository>
+            <id>apache</id>
+            <url>https://repository.apache.org/content/groups/public/</url>
+        </repository>
+
     </repositories>
 </project>

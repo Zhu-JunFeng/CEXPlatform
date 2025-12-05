@@ -8,18 +8,17 @@
         <groupId>com.cexpay</groupId>
         <artifactId>cex-platform</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-
     </parent>
 
-    <artifactId>cex-matching-engine</artifactId>
-    <name>cex-matching-engine</name>
-    <description>Order matching engine with in-memory index</description>
-    <modules>
-        <module>cex-matching-engine-api</module>
-        <module>cex-matching-engine-service</module>
-    </modules>
-    <packaging>pom</packaging>
+    <artifactId>cex-coin-push</artifactId>
+    <name>cex-coin-push</name>
+    <description>Real-time WebSocket push service for orders, trades and tickers</description>
 
+    <packaging>pom</packaging>
+    <modules>
+        <module>cex-coin-push-api</module>
+        <module>cex-coin-push-service</module>
+    </modules>
 
 
     <build>

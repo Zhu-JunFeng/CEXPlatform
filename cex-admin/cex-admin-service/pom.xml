@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <parent>
+        <groupId>com.cexpay</groupId>
+        <artifactId>cex-admin</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>cex-admin-service</artifactId>
+    <name>cex-admin-service</name>
+    <description>cex-admin-service</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.cexpay</groupId>
+            <artifactId>cex-coin-common</artifactId>
+            <version>${reversion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cexpay</groupId>
+            <artifactId>cex-admin-api</artifactId>
+            <version>${reversion}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>${project.name}</finalName>
+                    <outputDirectory>../../target</outputDirectory>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
