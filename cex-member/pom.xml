@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.cexpay</groupId>
         <artifactId>cex-platform</artifactId>
-        <version>${reversion}</version>
+        <version>0.0.1-SNAPSHOT</version>
 
     </parent>
     <artifactId>cex-member</artifactId>

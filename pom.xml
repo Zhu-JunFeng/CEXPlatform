@@ -7,7 +7,7 @@
 
     <groupId>com.cexpay</groupId>
     <artifactId>cex-platform</artifactId>
-    <version>${reversion}</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>CEX Platform</name>
     <description>Centralized Exchange Platform - Microservices Architecture</description>
