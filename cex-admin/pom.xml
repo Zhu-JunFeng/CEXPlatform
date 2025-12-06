@@ -11,7 +11,6 @@
 
     <artifactId>cex-admin</artifactId>
     <packaging>pom</packaging>
-    <version>${reversion}</version>
     <name>cex-admin</name>
 
     <modules>

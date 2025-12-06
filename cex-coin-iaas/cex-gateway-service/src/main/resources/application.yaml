@@ -1,58 +1,80 @@
+server:
+  port: 8090
+
 spring:
-  main:
-    web-application-type: reactive
   application:
-    name: cex-gateway
+    name: cex-gateway-service
+
+  profiles:
+    active: dev
+
+  config:
+    import: nacos:${nacos.server}:8848?namespace=public&group=DEFAULT_GROUP&extension=yaml
+
   cloud:
     nacos:
-      server-addr: 127.0.0.1:8848
-      username: nacos
-      password: nacos
-      discovery:
-        namespace: public
-        group: DEFAULT_GROUP
       config:
+        server-addr: ${nacos.server}:8848
         namespace: public
         group: DEFAULT_GROUP
-        file-extension: yaml
+        username: ${nacos.username}
+        password: ${nacos.password}
+        refresh-enabled: true
+      discovery:
+        server-addr: ${nacos.server}:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        username: ${nacos.username}
+        password: ${nacos.password}
+
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
+
       routes:
-        - id: user-service
-          uri: lb://cex-user-service
+        - id: test-service-router
+          uri: https://www.aliyun.com
           predicates:
-            - Path=/user-service/**
-          filters:
-            - StripPrefix=1
-        - id: wallet-service
-          uri: lb://cex-wallet-service
+            - Path=/product
+        - id: cex-admin-service
+          uri: lb://cex-admin-service
           predicates:
-            - Path=/wallet-service/**
-          filters:
-            - StripPrefix=1
-        - id: order-service
-          uri: lb://cex-order-service
-          predicates:
-            - Path=/order-service/**
-          filters:
-            - StripPrefix=1
-        - id: market-data-service
-          uri: lb://cex-market-data-service
-          predicates:
-            - Path=/market-service/**
-          filters:
-            - StripPrefix=1
+            - Path=/admin/**
 
-server:
-  port: 8080
-
-jwt:
-  secret: your-secret-key-must-be-at-least-32-characters-long-here
-
+    sentinel:
+      transport:
+        dashboard: ${sentinel-dashboard.server}:8858
+      datasource:
+        ds1.nacos:
+          server-addr: ${nacos.server}:8848
+          namespace: public
+          group-id: SENTINEL_GROUP
+          data-id: gateway-flow-rules
+          rule-type: gw_flow
+          username: ${nacos.username}
+          password: ${nacos.password}
+        ds2.nacos:
+          server-addr: ${nacos.server}:8848
+          namespace: public
+          group-id: SENTINEL_GROUP
+          data-id: gateway-api-group-rules
+          rule-type: gw-api-group
+          username: ${nacos.username}
+          password: ${nacos.password}
+#      datasource:
+#        ds1.file:
+#          file: classpath:sentinel/gateway-flow-rules.json
+#          data-type: json
+#          rule-type: gw_flow
+#        ds2.file:
+#          file: classpath:sentinel/api-group-rules.json
+#          data-type: json
+#          rule-type: gw-api-group
+# ============================================================
+#
 logging:
   level:
     root: INFO
-    com.cexpay: DEBUG
+    com.cex: DEBUG

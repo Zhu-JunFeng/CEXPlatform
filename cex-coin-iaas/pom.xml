@@ -10,7 +10,6 @@
 
     <artifactId>cex-coin-iaas</artifactId>
     <name>cex-coin-iaas</name>
-    <version>${reversion}</version>
     <description>cex-coin-iaas</description>
     <packaging>pom</packaging>
 

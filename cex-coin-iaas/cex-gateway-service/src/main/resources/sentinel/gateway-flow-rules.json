@@ -1,0 +1,13 @@
+[{
+  "resource": "cex-admin-service",
+  "resourceType": 0,
+  "intervalSec": 1,
+  "count": 1000
+},
+  {
+    "resource": "cex-admin-api",
+    "resourceType": 1,
+    "intervalSec": 60,
+    "count": 1
+  }
+]

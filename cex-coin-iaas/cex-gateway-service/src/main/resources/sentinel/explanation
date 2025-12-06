@@ -1,0 +1,15 @@
+// 网关限流规则说明
+{
+    "resource": "资源名称 ,网关时:route.id ; api分组时:api分组名称",
+    "resourceType" : "0:网关，1:api分组",
+    "intervalSec": "统计时间窗口，单位为秒，默认值为60秒",
+    "count": "限流阈值，单位QPS"
+}
+
+// api分组限流规则说明
+{
+	"apiName": "api分组名称",
+	"predicateItems": { // 匹配规则列表
+		"pattern": "匹配路径"
+	}
+}

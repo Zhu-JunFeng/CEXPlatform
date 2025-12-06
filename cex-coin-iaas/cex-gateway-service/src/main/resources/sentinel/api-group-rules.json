@@ -1,0 +1,8 @@
+[
+  {
+    "apiName": "cex-admin-api",
+    "predicateItems": [{
+      "pattern": "/admin/test/hello"
+    }]
+  }
+]
