@@ -70,15 +70,36 @@
         <!-- mybatis-plus-boot-starter-->
         <mybatis-plus-boot-starter.version>3.5.3.2</mybatis-plus-boot-starter.version>
 
+        <hutool.version>5.8.42</hutool.version>
+
+        <spring-boot-data-redis.version>4.0.0</spring-boot-data-redis.version>
+
+        <jetcache-anno.version>2.7.7</jetcache-anno.version>
+
     </properties>
 
     <!-- 依赖管理 -->
     <dependencyManagement>
         <dependencies>
 
+
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-sleuth</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-data-redis</artifactId>
+                <version>${spring-boot-data-redis.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.alicp.jetcache/jetcache-anno -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-anno</artifactId>
+                <version>${jetcache-anno.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
 
             <!-- Spring Boot Dependencies -->

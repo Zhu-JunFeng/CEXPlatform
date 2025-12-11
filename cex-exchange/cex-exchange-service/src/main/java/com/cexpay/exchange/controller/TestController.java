@@ -1,16 +1,14 @@
-package com.cexpay.admin.service.controller;
+package com.cexpay.exchange.controller;
 
-import cn.hutool.json.JSONUtil;
 import com.cexpay.common.annotation.Log;
 import com.cexpay.common.model.ApiResponse;
+import com.cexpay.exchange.interceptor.CexAdminInterceptor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * TestController
@@ -18,15 +16,15 @@ import java.util.Map;
 @Slf4j
 @RestController
 @ResponseBody
-@RequestMapping("/admin/test")
+@RequestMapping("/exchange/test")
 public class TestController {
 
+    @Autowired
+    private CexAdminInterceptor cexAdminInterceptor;
 
-    @GetMapping("/hello")
+    @GetMapping("/exchange-hello")
     @Log(title = "用户管理", desc = "查询用户列表")
-    public ApiResponse<String> test() {
-        Map<String, String> map = new HashMap<>();
-        map.put("name", "cexpay");
-        return ApiResponse.success(JSONUtil.toJsonStr(map));
+    public Object test() {
+        return cexAdminInterceptor.hello();
     }
 }

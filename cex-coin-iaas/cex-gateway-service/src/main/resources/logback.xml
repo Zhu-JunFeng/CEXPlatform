@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 根配置开始 -->
+<configuration>
+    <!-- 1. 引入Spring Boot默认日志配置 -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- 2. 从Spring环境变量中获取属性 -->
+    <!-- name: Logback中使用的变量名 -->
+    <!-- source: Spring配置中的属性名 -->
+    <springProperty scope="context" name="SPRING_APP_NAME" source="spring.application.name"/>
+    <springProperty scope="context" name="SPRING_LOG_KEEP_DAYS" source="basic-tools.logback.log-save-days"/>
+
+    <!-- 3. 自定义属性 -->
+    <!-- 应用名称（优先级：环境变量 > Spring配置 > 默认值） -->
+    <property name="APP_NAME" value="${APP_NAME:-${SPRING_APP_NAME:-unknown-appname}}"/>
+
+    <!-- 日志保留天数（优先级同上） -->
+    <property name="APP_LOG_KEEP_DAYS" value="${APP_LOG_KEEP_DAYS:-${SPRING_LOG_KEEP_DAYS:-15}}"/>
+
+<!--    &lt;!&ndash; 日志存储路径（默认路径：/mnt/logs/${APP_NAME}） &ndash;&gt;-->
+<!--    <property name="APP_LOG_PATH" value="${APP_LOG_PATH:-${APP_HOME:-/mnt}/logs/${APP_NAME}}"/>-->
+
+    <!-- 日志存储路径（默认路径：当前目录的 logs/${APP_NAME}） -->
+    <property name="APP_LOG_PATH" value="${APP_LOG_PATH:-./logs/${APP_NAME}}"/>
+
+    <!-- 操作日志格式（带颜色和追踪信息） -->
+    <property name="OPERATION_LOG_PATTERN"
+              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%-5level) %clr([${APP_NAME},%X{traceId:-},%X{spanId:-},%X{parentId:-}]) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%logger{100}_%M){cyan} - %msg%n}"/>
+
+    <!-- 4. 主应用日志Appender -->
+    <appender name="APPLICATION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件路径 -->
+        <file>${APP_LOG_PATH}/default.log</file>
+
+        <!-- 编码器 -->
+        <encoder>
+            <!-- 使用Spring默认的文件日志格式 -->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>  <!-- 字符集 -->
+        </encoder>
+
+        <!-- 滚动策略：按时间和大小滚动 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 滚动文件名模式（按天滚动，压缩为zip） -->
+            <fileNamePattern>${APP_LOG_PATH}/default-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+            <maxFileSize>200MB</maxFileSize>      <!-- 单个文件最大200MB -->
+            <totalSizeCap>20GB</totalSizeCap>     <!-- 所有日志总大小上限 -->
+            <maxHistory>${APP_LOG_KEEP_DAYS}</maxHistory>  <!-- 保留天数 -->
+        </rollingPolicy>
+    </appender>
+
+    <!-- 5. 控制台输出Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${OPERATION_LOG_PATTERN}</pattern>  <!-- 使用自定义格式 -->
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 6. 异步日志Appender（提升性能） -->
+    <appender name="APPLICATION_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>  <!-- 0=不丢弃日志 -->
+        <queueSize>256</queueSize>                   <!-- 队列容量 -->
+        <appender-ref ref="APPLICATION"/>            <!-- 绑定主日志Appender -->
+    </appender>
+
+    <!-- 7. 错误日志专用Appender -->
+    <appender name="ERROR_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_LOG_PATH}/error.log</file>  <!-- 错误日志路径 -->
+
+        <!-- 时间+大小滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${APP_LOG_PATH}/error-%d{yyyy-MM-dd}.%i.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>200MB</maxFileSize>  <!-- 触发滚动的文件大小 -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <MaxHistory>${APP_LOG_KEEP_DAYS}</MaxHistory>  <!-- 保留天数 -->
+        </rollingPolicy>
+
+        <!-- 编码器 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${OPERATION_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+
+        <!-- 过滤器：仅记录ERROR级别日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>   <!-- 匹配时接受 -->
+            <onMismatch>DENY</onMismatch>  <!-- 不匹配时拒绝 -->
+        </filter>
+    </appender>
+
+    <!-- 8. 业务日志专用Appender -->
+    <appender name="BUSINESS_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_LOG_PATH}/business.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${APP_LOG_PATH}/business-%d{yyyy-MM-dd}.%i.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>200MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <MaxHistory>${APP_LOG_KEEP_DAYS}</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!-- 业务日志使用纯格式，只输出message（msg包含所有追踪信息） -->
+            <pattern>%msg%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 9. 业务日志记录器 -->
+    <!-- name: 指定监控的包/类 -->
+    <!-- additivity="false": 禁止向上传递日志 -->
+    <logger name="com.cexpay.common.aspect.LoggingAspect" level="INFO" additivity="false">
+        <appender-ref ref="BUSINESS_LOG"/>  <!-- 指定输出到业务日志 -->
+    </logger>
+
+    <!-- 10. 根记录器（全局配置） -->
+    <root level="INFO">  <!-- 全局日志级别为INFO -->
+        <!-- 开发环境启用控制台输出 -->
+        <springProfile name="default,console">
+            <appender-ref ref="CONSOLE"/>
+        </springProfile>
+
+        <!-- 生产环境使用异步日志 -->
+        <appender-ref ref="APPLICATION_ASYNC"/>
+
+        <!-- 错误日志独立记录 -->
+        <appender-ref ref="ERROR_LOG"/>
+    </root>
+</configuration>

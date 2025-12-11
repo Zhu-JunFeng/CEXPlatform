@@ -42,6 +42,7 @@ spring:
           uri: lb://cex-admin-service
           predicates:
             - Path=/admin/**
+            - Path=/example/**
 
     sentinel:
       transport:

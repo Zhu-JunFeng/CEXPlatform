@@ -1,0 +1,35 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: authorization-service
+
+  profiles:
+    active: dev
+
+#  config:
+#    import:
+#      - nacos:${spring.application.name}-${spring.profiles.active}.yaml
+
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.server}:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        username: ${nacos.username}
+        password: ${nacos.password}
+        refresh-enabled: true
+        data-id: ${spring.application.name}-${spring.profiles.active}.yaml
+      discovery:
+        server-addr: ${nacos.server}:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        username: ${nacos.username}
+        password: ${nacos.password}
+
+logging:
+  level:
+    root: INFO
+    com.cex: DEBUG
