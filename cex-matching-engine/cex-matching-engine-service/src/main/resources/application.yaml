@@ -1,34 +1,42 @@
+
+server:
+  port: 8093
+
 spring:
   application:
     name: cex-matching-engine
-  kafka:
-    bootstrap-servers: 127.0.0.1:9092
-    producer:
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    consumer:
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      group-id: cex-matching-engine
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 1
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://43.138.23.51:3306/cex-admin?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+
+  profiles:
+    active: dev
+
+  config:
+    import: nacos:${nacos.server}:8848?namespace=public&group=DEFAULT_GROUP&extension=yaml
+
   cloud:
     nacos:
-      server-addr: 127.0.0.1:8848
-      username: nacos
-      password: nacos
-      discovery:
-        namespace: public
-        group: DEFAULT_GROUP
       config:
+        server-addr: ${nacos.server}:8848
         namespace: public
         group: DEFAULT_GROUP
-        file-extension: yaml
+        username: ${nacos.username}
+        password: ${nacos.password}
+        refresh-enabled: true
+      discovery:
+        server-addr: ${nacos.server}:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        username: ${nacos.username}
+        password: ${nacos.password}
 
-server:
-  port: 9004
-
+# ============================================================
+#
+# ============================================================
 logging:
   level:
     root: INFO
-    com.cexpay: DEBUG
+    com.cex: DEBUG
