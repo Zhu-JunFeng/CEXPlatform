@@ -18,6 +18,7 @@ public class OrderEvent implements Serializable {
 
     /**
      * 事件携带的数据对象
+     * 只在内存运行时使用，不希望被网络传输、存储、持久化
      */
     protected transient Object source;
 

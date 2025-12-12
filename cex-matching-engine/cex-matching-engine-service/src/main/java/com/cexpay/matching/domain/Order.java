@@ -63,7 +63,7 @@ public class Order {
     /**
      * 订单方向
      */
-    private String orderDirection;
+    private Integer orderDirection;
 
     /**
      * 挂单价格
