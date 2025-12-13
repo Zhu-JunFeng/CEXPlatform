@@ -1,8 +1,24 @@
-
 server:
   port: 8093
 
 spring:
+
+  match:
+    symbols:
+      BTC_USDT:
+        coinScale: 8        # BTC 精度
+        baseCoinScale: 2    # USDT 精度
+      ETH_USDT:
+        coinScale: 8
+        baseCoinScale: 2
+      LTC_USDT:
+        coinScale: 8
+        baseCoinScale: 2
+      BTC_ETH:
+        coinScale: 8
+        baseCoinScale: 8
+
+
   application:
     name: cex-matching-engine
   datasource:
@@ -33,10 +49,23 @@ spring:
         username: ${nacos.username}
         password: ${nacos.password}
 
+  disruptor:
+    enabled: true
+    ring-buffer-size: 1048576
+    multi-producer: false
+    wait-strategy: yielding
+    fail-fast: true
+
+
+    rocketmq:
+      name-server: 43.138.23.51:9876
+      topic: ORDER_TOPIC
+      consumer:
+        group: matching-engine-consumer-group
 # ============================================================
 #
 # ============================================================
 logging:
   level:
-    root: INFO
-    com.cex: DEBUG
+    root: debug
+    com.cex: debug

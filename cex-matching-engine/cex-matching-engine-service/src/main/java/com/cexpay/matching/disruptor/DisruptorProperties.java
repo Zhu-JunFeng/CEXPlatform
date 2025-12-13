@@ -1,5 +1,6 @@
 package com.cexpay.matching.disruptor;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -10,12 +11,37 @@ import org.springframework.stereotype.Component;
 public class DisruptorProperties {
 
     /**
-     * 缓冲区大小
+     * 是否启用 Disruptor
+     */
+    private boolean enabled = true;
+
+    /**
+     * RingBuffer 大小（必须是 2 的幂）
      */
     private Integer ringBufferSize = 1024 * 1024;
 
     /**
-     * 是否支持多生产者
+     * 是否多生产者
      */
-    private boolean isMultiProducer = false;
+    private boolean multiProducer = false;
+
+    /**
+     * 等待策略
+     * blocking | yielding | busySpin
+     */
+    private String waitStrategy = "yielding";
+
+    /**
+     * 是否在异常时 fail-fast
+     */
+    private boolean failFast = true;
+
+    @PostConstruct
+    public void validate() {
+        if ((ringBufferSize & (ringBufferSize - 1)) != 0) {
+            throw new IllegalArgumentException(
+                    "ringBufferSize must be power of 2, current=" + ringBufferSize
+            );
+        }
+    }
 }

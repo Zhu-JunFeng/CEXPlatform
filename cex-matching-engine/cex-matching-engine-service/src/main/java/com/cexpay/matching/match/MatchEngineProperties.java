@@ -2,7 +2,6 @@ package com.cexpay.matching.match;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.util.Map;
 

@@ -77,9 +77,11 @@
         <jetcache-anno.version>2.7.7</jetcache-anno.version>
 
         <!-- 高性能、低延迟的消息队列-->
-        <disruptor.version>4.0.0</disruptor.version>
+        <disruptor.version>3.4.4</disruptor.version>
 
         <affinity.version>3.27ea1</affinity.version>
+
+        <rocketmq-spring-boot-starter.version>2.3.0</rocketmq-spring-boot-starter.version>
 
     </properties>
 
@@ -90,7 +92,7 @@
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
-                <version>2.3.0</version>
+                <version>${rocketmq-spring-boot-starter.version}</version>
             </dependency>
 
             <!-- cpu亲和锁 绑定CPU的线程Thread -->

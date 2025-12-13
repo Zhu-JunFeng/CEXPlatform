@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadFactory;
 
 @Configuration
 @EnableConfigurationProperties(DisruptorProperties.class)
-public class DisruptorAutoConfiguration {
+public class DisruptorConfig {
 
     @Autowired
     private DisruptorProperties disruptorProperties;
