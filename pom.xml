@@ -81,9 +81,7 @@
 
         <affinity.version>3.27ea1</affinity.version>
 
-        <rocketmq-spring-boot-starter.version>2.3.0</rocketmq-spring-boot-starter.version>
-
-        <rocketmq-client.verion>5.3.0</rocketmq-client.verion>
+        <rocketmq-spring-boot-starter.version>2.2.3</rocketmq-spring-boot-starter.version>
 
     </properties>
 
@@ -91,11 +89,6 @@
     <dependencyManagement>
         <dependencies>
 
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-client</artifactId>
-                <version>${rocketmq-client.verion}</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>

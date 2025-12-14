@@ -3,19 +3,20 @@ package com.cexpay.matching.rocket;
 import cn.hutool.json.JSONUtil;
 import com.cexpay.matching.domain.Order;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.rocketmq.spring.core.RocketMQPushConsumerLifecycleListener;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 @RocketMQMessageListener(
-        nameServer = "${spring.cloud.rocketmq.name-server:43.138.23.51:9876}",
-        topic = "${spring.cloud.rocketmq.name-server:ORDER_TOPIC}",
+        topic = "ORDER_TOPIC",
         consumerGroup = "${spring.cloud.rocketmq.consumer.group:matching-engine-consumer-group}",
         selectorExpression = "*"
 )
-public class OrderConsumer implements RocketMQListener<String> {
+public class OrderConsumer implements RocketMQListener<String> , RocketMQPushConsumerLifecycleListener {
 
     @Override
     public void onMessage(String msg) {
@@ -26,5 +27,13 @@ public class OrderConsumer implements RocketMQListener<String> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void prepareStart(DefaultMQPushConsumer consumer) {
+        // 设置最大重试次数
+        consumer.setMaxReconsumeTimes(3);
+        // 如下，设置其它consumer相关属性
+        consumer.setPullBatchSize(16);
     }
 }

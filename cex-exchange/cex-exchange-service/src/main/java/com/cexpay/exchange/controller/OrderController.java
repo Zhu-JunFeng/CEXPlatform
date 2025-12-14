@@ -1,7 +1,9 @@
 package com.cexpay.exchange.controller;
 
+import com.cexpay.common.model.ApiResponse;
 import com.cexpay.exchange.model.OrderMessage;
 import com.cexpay.exchange.rocketmq.OrderProducer;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +15,9 @@ public class OrderController {
     private OrderProducer orderProducer;
 
     @PostMapping("/add")
-    public void placeOrder(@RequestBody OrderMessage order) {
+    public ApiResponse<Object> placeOrder(@RequestBody OrderMessage order) {
         order.setTimestamp(System.currentTimeMillis());
-        orderProducer.sendOrder(order);
+        Object msgId = orderProducer.sendOrder(order);
+        return ApiResponse.success(msgId);
     }
 }

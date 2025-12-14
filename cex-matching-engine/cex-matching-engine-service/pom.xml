@@ -57,11 +57,6 @@
             <version>${rocketmq-spring-boot-starter.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-client</artifactId>
-            <version>${rocketmq-client.verion}</version>
-        </dependency>
 
 
         <dependency>

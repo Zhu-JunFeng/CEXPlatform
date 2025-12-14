@@ -1,13 +1,11 @@
 package com.cexpay.exchange.rocketmq;
 
+import cn.hutool.json.JSONUtil;
 import com.cexpay.exchange.model.OrderMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.client.exception.MQBrokerException;
-import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
-import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +24,17 @@ public class OrderProducer {
     /**
      * 同步发送订单消息（适合交易核心）
      */
-    public boolean sendOrder(OrderMessage order) {
+    public String sendOrder(OrderMessage order) {
         try {
             SendResult result = rocketMQTemplate.syncSend(
                     TOPIC,
-                    MessageBuilder.withPayload(order)
+                    MessageBuilder.withPayload(JSONUtil.toJsonStr(order))
                             .setHeader(RocketMQHeaders.KEYS, order.getOrderId())
                             .build()
             );
             if (result.getSendStatus() == SendStatus.SEND_OK) {
                 log.info("Order sent successfully, orderId={}, msgId={}", order.getOrderId(), result.getMsgId());
-                return true;
+                return result.getMsgId();
             } else {
                 log.warn("Order send status not OK, orderId={}, sendStatus={}", order.getOrderId(), result.getSendStatus());
             }
@@ -45,7 +43,7 @@ public class OrderProducer {
             // 可以放到重试队列或者异步记录到DB
             throw new RuntimeException("SEND_ORDER_FAILED", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -54,7 +52,7 @@ public class OrderProducer {
     public void sendOrderAsync(OrderMessage order) {
         rocketMQTemplate.asyncSend(
                 TOPIC,
-                MessageBuilder.withPayload(order)
+                MessageBuilder.withPayload(JSONUtil.toJsonStr(order))
                         .setHeader(RocketMQHeaders.KEYS, order.getOrderId())
                         .build(),
                 new SendCallback() {
