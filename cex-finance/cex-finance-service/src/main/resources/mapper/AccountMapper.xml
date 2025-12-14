@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cexpay.finance.mapper.AccountMapper">
+
+    <resultMap id="BaseResultMap" type="com.cexpay.finance.domain.Account">
+            <id property="id" column="id" />
+            <result property="userId" column="user_id" />
+            <result property="coinId" column="coin_id" />
+            <result property="status" column="status" />
+            <result property="balanceAmount" column="balance_amount" />
+            <result property="freezeAmount" column="freeze_amount" />
+            <result property="rechargeAmount" column="recharge_amount" />
+            <result property="withdrawalsAmount" column="withdrawals_amount" />
+            <result property="netValue" column="net_value" />
+            <result property="lockMargin" column="lock_margin" />
+            <result property="floatProfit" column="float_profit" />
+            <result property="totalProfit" column="total_profit" />
+            <result property="recAddr" column="rec_addr" />
+            <result property="version" column="version" />
+            <result property="lastUpdateTime" column="last_update_time" />
+            <result property="created" column="created" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,coin_id,status,balance_amount,freeze_amount,
+        recharge_amount,withdrawals_amount,net_value,lock_margin,float_profit,
+        total_profit,rec_addr,version,last_update_time,created
+    </sql>
+</mapper>

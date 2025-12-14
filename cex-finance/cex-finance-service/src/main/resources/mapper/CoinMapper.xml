@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cexpay.finance.mapper.CoinMapper">
+
+    <resultMap id="BaseResultMap" type="com.cexpay.finance.domain.Coin">
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="title" column="title" />
+            <result property="img" column="img" />
+            <result property="type" column="type" />
+            <result property="wallet" column="wallet" />
+            <result property="round" column="round" />
+            <result property="baseAmount" column="base_amount" />
+            <result property="minAmount" column="min_amount" />
+            <result property="maxAmount" column="max_amount" />
+            <result property="dayMaxAmount" column="day_max_amount" />
+            <result property="status" column="status" />
+            <result property="autoOut" column="auto_out" />
+            <result property="rate" column="rate" />
+            <result property="minFeeNum" column="min_fee_num" />
+            <result property="withdrawFlag" column="withdraw_flag" />
+            <result property="rechargeFlag" column="recharge_flag" />
+            <result property="lastUpdateTime" column="last_update_time" />
+            <result property="created" column="created" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,title,img,type,wallet,
+        round,base_amount,min_amount,max_amount,day_max_amount,
+        status,auto_out,rate,min_fee_num,withdraw_flag,
+        recharge_flag,last_update_time,created
+    </sql>
+</mapper>

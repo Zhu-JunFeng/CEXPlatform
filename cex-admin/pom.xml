@@ -18,4 +18,14 @@
         <module>cex-admin-service</module>
     </modules>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>com.cexpay</groupId>
+            <artifactId>cex-coin-common</artifactId>
+            <version>${reversion}</version>
+        </dependency>
+
+    </dependencies>
+
 </project>

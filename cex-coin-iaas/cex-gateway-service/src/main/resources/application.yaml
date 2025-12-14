@@ -9,7 +9,7 @@ spring:
     active: dev
 
   config:
-    import: nacos:${nacos.server}:8848?namespace=public&group=DEFAULT_GROUP&extension=yaml
+    import: optional:nacos:${nacos.server}:8848?namespace=public&group=DEFAULT_GROUP&extension=yaml
 
   cloud:
     nacos:

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cexpay.finance.mapper.AccountDetailMapper">
+
+    <resultMap id="BaseResultMap" type="com.cexpay.finance.domain.AccountDetail">
+            <id property="id" column="id" />
+            <result property="userId" column="user_id" />
+            <result property="coinId" column="coin_id" />
+            <result property="accountId" column="account_id" />
+            <result property="refAccountId" column="ref_account_id" />
+            <result property="orderId" column="order_id" />
+            <result property="direction" column="direction" />
+            <result property="businessType" column="business_type" />
+            <result property="amount" column="amount" />
+            <result property="fee" column="fee" />
+            <result property="remark" column="remark" />
+            <result property="created" column="created" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,coin_id,account_id,ref_account_id,order_id,
+        direction,business_type,amount,fee,remark,
+        created
+    </sql>
+</mapper>

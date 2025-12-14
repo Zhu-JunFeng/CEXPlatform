@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cexpay.finance.mapper.CoinBalanceMapper">
+
+    <resultMap id="BaseResultMap" type="com.cexpay.finance.domain.CoinBalance">
+            <id property="id" column="id" />
+            <result property="coinId" column="coin_id" />
+            <result property="coinName" column="coin_name" />
+            <result property="systemBalance" column="system_balance" />
+            <result property="coinType" column="coin_type" />
+            <result property="collectAccountBalance" column="collect_account_balance" />
+            <result property="loanAccountBalance" column="loan_account_balance" />
+            <result property="feeAccountBalance" column="fee_account_balance" />
+            <result property="lastUpdateTime" column="last_update_time" />
+            <result property="created" column="created" />
+            <result property="rechargeAccountBalance" column="recharge_account_balance" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,coin_id,coin_name,system_balance,coin_type,collect_account_balance,
+        loan_account_balance,fee_account_balance,last_update_time,created,recharge_account_balance
+    </sql>
+</mapper>

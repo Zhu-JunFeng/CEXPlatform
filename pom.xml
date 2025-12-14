@@ -83,11 +83,19 @@
 
         <rocketmq-spring-boot-starter.version>2.3.0</rocketmq-spring-boot-starter.version>
 
+        <rocketmq-client.verion>5.3.0</rocketmq-client.verion>
+
     </properties>
 
     <!-- 依赖管理 -->
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>${rocketmq-client.verion}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
@@ -126,6 +134,12 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
 

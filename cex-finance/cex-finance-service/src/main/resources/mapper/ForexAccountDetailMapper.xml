@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cexpay.finance.mapper.ForexAccountDetailMapper">
+
+    <resultMap id="BaseResultMap" type="com.cexpay.finance.domain.ForexAccountDetail">
+            <id property="id" column="id" />
+            <result property="accountId" column="account_id" />
+            <result property="type" column="type" />
+            <result property="amount" column="amount" />
+            <result property="remark" column="remark" />
+            <result property="created" column="created" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,account_id,type,amount,remark,created
+    </sql>
+</mapper>

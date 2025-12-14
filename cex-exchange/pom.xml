@@ -19,13 +19,14 @@
         <module>cex-exchange-service</module>
     </modules>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <dependencies>
+
+        <dependency>
+            <groupId>com.cexpay</groupId>
+            <artifactId>cex-coin-common</artifactId>
+            <version>${reversion}</version>
+        </dependency>
+
+    </dependencies>
 
 </project>

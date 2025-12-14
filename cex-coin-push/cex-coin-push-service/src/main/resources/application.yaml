@@ -1,3 +1,5 @@
+server:
+  port: 8093
 spring:
   application:
     name: cex-websocket-push
@@ -23,8 +25,7 @@ spring:
         group: DEFAULT_GROUP
         file-extension: yaml
 
-server:
-  port: 9006
+
 
 logging:
   level:
