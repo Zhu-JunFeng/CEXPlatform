@@ -1,6 +1,7 @@
 package com.cexpay.matching.rocket;
 
 import cn.hutool.json.JSONUtil;
+import com.cexpay.matching.disruptor.DisruptorTemplate;
 import com.cexpay.matching.domain.Order;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -11,6 +12,7 @@ import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -48,6 +50,9 @@ public class RocketMqConsumerConfig {
 
     private DefaultMQPushConsumer consumer;
 
+    @Autowired
+    private DisruptorTemplate disruptorTemplate;
+
     @PostConstruct
     public void startConsumer() {
         try {
@@ -76,15 +81,15 @@ public class RocketMqConsumerConfig {
             consumer.start();
 
             log.info("""
-                    ✅ RocketMQ Consumer 启动成功
-                    ├─ group: {}
-                    ├─ topic: {}
-                    ├─ tag: {}
-                    ├─ namesrv: {}
-                    ├─ thread: {} ~ {}
-                    ├─ batchSize: {}
-                    └─ maxRetry: {}
-                    """,
+                            ✅ RocketMQ Consumer 启动成功
+                            ├─ group: {}
+                            ├─ topic: {}
+                            ├─ tag: {}
+                            ├─ namesrv: {}
+                            ├─ thread: {} ~ {}
+                            ├─ batchSize: {}
+                            └─ maxRetry: {}
+                            """,
                     consumerGroup, topic, tag, nameServer,
                     consumeThreadMin, consumeThreadMax,
                     consumeBatchSize, maxReconsumeTimes
@@ -153,7 +158,7 @@ public class RocketMqConsumerConfig {
     private void handleBusiness(MessageExt msg, String body) {
         log.info("📩 消费成功 msgId={}, body={}", msg.getMsgId(), body);
         Order bean = JSONUtil.toBean(body, Order.class);
-
+        disruptorTemplate.onData(bean);
         // TODO 撮合 / 入库 / 状态流转
     }
 
