@@ -93,6 +93,7 @@ public class OrderBooks {
         MergeOrder mergeOrder = currentLimitPrices.get(order.getPrice());
         if (mergeOrder == null) {
             mergeOrder = new MergeOrder();
+            currentLimitPrices.put(order.getPrice(), mergeOrder);
         }
         mergeOrder.addOrder(order);
     }
