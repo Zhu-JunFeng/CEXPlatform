@@ -9,6 +9,7 @@ import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,9 @@ public class OrderProducer {
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
 
-    private static final String TOPIC = "ORDER_TOPIC";
+    @Value("${rocketmq.producer.topic}")
+    private String topic;
+
 
     /**
      * 同步发送订单消息（适合交易核心）
@@ -27,7 +30,7 @@ public class OrderProducer {
     public String sendOrder(OrderMessage order) {
         try {
             SendResult result = rocketMQTemplate.syncSend(
-                    TOPIC,
+                    topic,
                     MessageBuilder.withPayload(JSONUtil.toJsonStr(order))
                             .setHeader(RocketMQHeaders.KEYS, order.getOrderId())
                             .build()
@@ -51,7 +54,7 @@ public class OrderProducer {
      */
     public void sendOrderAsync(OrderMessage order) {
         rocketMQTemplate.asyncSend(
-                TOPIC,
+                topic,
                 MessageBuilder.withPayload(JSONUtil.toJsonStr(order))
                         .setHeader(RocketMQHeaders.KEYS, order.getOrderId())
                         .build(),

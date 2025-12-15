@@ -33,10 +33,13 @@ spring:
         username: ${nacos.username}
         password: ${nacos.password}
 
-    rocketmq:
-      name-server: 43.138.23.51:9876
-      producer:
-        group: exchange-order-producer-group
+
+rocketmq:
+  name-server: 43.138.23.51:9876
+
+  producer:
+    group: matching-engine-producer-group
+    topic: ORDER_TOPIC
 
 #        access-key: rocketAdmin         # 对应 plain_acl.yml 的账户
 #        secret-key: 12345678
@@ -49,5 +52,5 @@ spring:
 # ============================================================
 logging:
   level:
-    root: debug
+    root: info
     com.cex: debug

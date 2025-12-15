@@ -56,16 +56,17 @@ spring:
     wait-strategy: yielding
     fail-fast: true
 
+rocketmq:
+  name-server: 43.138.23.51:9876
 
-    rocketmq:
-      name-server: 43.138.23.51:9876
-      topic: ORDER_TOPIC
-      consumer:
-        group: matching-engine-consumer-group
+  consumer:
+    group: matching-engine-consumer-group
+    topic: ORDER_TOPIC
+    tag: "*"
 # ============================================================
 #
 # ============================================================
 logging:
   level:
-    root: debug
-    com.cex: debug
+    org.apache.rocketmq.client: INFO
+    org.apache.rocketmq.remoting: INFO
