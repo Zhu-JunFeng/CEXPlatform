@@ -20,7 +20,8 @@ public class LimitPriceMatchServiceImpl implements MatchService, InitializingBea
 
     @Override
     public void match(OrderBooks orderBooks, Order order) {
-        log.info("Matching order {}", order);
+//        log.info("Matching order {}", order);
+        orderBooks.addOrder(order);
     }
 
 }

@@ -159,7 +159,7 @@ public class RocketMqConsumerConfig {
         log.info("📩 消费成功 msgId={}, body={}", msg.getMsgId(), body);
         Order bean = JSONUtil.toBean(body, Order.class);
         disruptorTemplate.onData(bean);
-        // TODO 撮合 / 入库 / 状态流转
+        // TODO 撮合 状态流转
     }
 
     @PreDestroy

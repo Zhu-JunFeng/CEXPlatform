@@ -8,6 +8,7 @@ import com.cexpay.matching.enums.MatchStrategy;
 import com.cexpay.matching.match.MatchServiceFactory;
 import com.lmax.disruptor.EventHandler;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * 针对某一个OrderEventHandler 同一时间只有一个线程执行它
  */
 @Slf4j
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderEventHandler implements EventHandler<OrderEvent> {
@@ -39,7 +41,7 @@ public class OrderEventHandler implements EventHandler<OrderEvent> {
      */
     @Override
     public void onEvent(OrderEvent orderEvent, long l, boolean b) {
-        // 从ringBuffer中接受数据
+        // 从ringBuffer 中接收数据
         Order order = (Order) orderEvent.getSource();
         if (!StrUtil.equals(this.symbol, order.getSymbol())) {
             return;
