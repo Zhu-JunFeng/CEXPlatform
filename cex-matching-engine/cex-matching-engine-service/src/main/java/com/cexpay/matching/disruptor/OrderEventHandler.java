@@ -36,14 +36,10 @@ public class OrderEventHandler implements EventHandler<OrderEvent> {
      * @param orderEvent
      * @param l
      * @param b
-     * @throws Exception
      */
     @Override
-    public void onEvent(OrderEvent orderEvent, long l, boolean b) throws Exception {
+    public void onEvent(OrderEvent orderEvent, long l, boolean b) {
         // 从ringBuffer中接受数据
-        log.info("接受订单事件 OrderEventHandler received order event: {}", JSONUtil.toJsonStr(orderEvent));
-
-        // todo
         Order order = (Order) orderEvent.getSource();
         if (!StrUtil.equals(this.symbol, order.getSymbol())) {
             return;

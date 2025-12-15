@@ -70,6 +70,8 @@ public class Order {
      */
     private BigDecimal price = BigDecimal.ZERO;
 
+    private long time;
+
     /**
      * 已经撮合成功的订单
      */

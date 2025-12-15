@@ -23,9 +23,9 @@ public class MatchEngineAutoConfiguration {
 
 
     @Bean
-    public EventHandler[] eventHandlers() {
+    public EventHandler<OrderEvent>[] eventHandlers() {
         Map<String, MatchEngineProperties.CoinScale> symbols = matchEngineProperties.getSymbols();
-        EventHandler[] eventHandlers = new EventHandler[symbols.size()];
+        EventHandler<OrderEvent>[] eventHandlers = new EventHandler[symbols.size()];
         int i = 0;
         for (Map.Entry<String, MatchEngineProperties.CoinScale> entry : symbols.entrySet()) {
             String symbol = entry.getKey();

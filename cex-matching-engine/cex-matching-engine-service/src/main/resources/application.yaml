@@ -5,16 +5,16 @@ spring:
 
   match:
     symbols:
-      BTC_USDT:
+      BTCUSDT:
         coinScale: 8        # BTC 精度
         baseCoinScale: 2    # USDT 精度
-      ETH_USDT:
+      ETHUSDT:
         coinScale: 8
         baseCoinScale: 2
-      LTC_USDT:
+      LTCUSDT:
         coinScale: 8
         baseCoinScale: 2
-      BTC_ETH:
+      FOFTGCN:
         coinScale: 8
         baseCoinScale: 8
 
@@ -23,7 +23,7 @@ spring:
     name: cex-matching-engine
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://43.138.23.51:3306/cex-admin?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://43.138.23.51:3306/coin-exchange?useSSL=false&serverTimezone=UTC
     username: root
     password: root
 
