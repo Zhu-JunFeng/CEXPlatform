@@ -1,6 +1,6 @@
 package com.cexpay.matching.service;
 
-import com.cexpay.matching.domain.entity.EntrustOrder;
+import com.cexpay.matching.model.entity.EntrustOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

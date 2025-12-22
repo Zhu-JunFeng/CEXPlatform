@@ -1,6 +1,6 @@
 package com.cexpay.matching.disruptor;
 
-import com.cexpay.matching.domain.Order;
+import com.cexpay.matching.model.Order;
 import com.lmax.disruptor.EventTranslatorOneArg;
 import com.lmax.disruptor.RingBuffer;
 

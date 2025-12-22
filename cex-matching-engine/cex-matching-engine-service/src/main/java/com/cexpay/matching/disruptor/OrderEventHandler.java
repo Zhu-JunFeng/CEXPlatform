@@ -1,10 +1,9 @@
 package com.cexpay.matching.disruptor;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
-import com.cexpay.matching.domain.Order;
-import com.cexpay.matching.domain.OrderBooks;
-import com.cexpay.matching.enums.MatchStrategy;
+import com.cexpay.matching.model.Order;
+import com.cexpay.matching.model.OrderBooks;
+import com.cexpay.common.enums.MatchStrategy;
 import com.cexpay.matching.match.MatchServiceFactory;
 import com.lmax.disruptor.EventHandler;
 import lombok.AllArgsConstructor;

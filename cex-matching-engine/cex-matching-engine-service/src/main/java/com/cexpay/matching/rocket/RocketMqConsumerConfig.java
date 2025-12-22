@@ -2,7 +2,8 @@ package com.cexpay.matching.rocket;
 
 import cn.hutool.json.JSONUtil;
 import com.cexpay.matching.disruptor.DisruptorTemplate;
-import com.cexpay.matching.domain.Order;
+import com.cexpay.matching.model.Order;
+import com.cexpay.matching.model.entity.EntrustOrder;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
@@ -156,9 +157,9 @@ public class RocketMqConsumerConfig {
      * 实际业务处理入口
      */
     private void handleBusiness(MessageExt msg, String body) {
-        log.info("📩 消费成功 msgId={}, body={}", msg.getMsgId(), body);
-        Order bean = JSONUtil.toBean(body, Order.class);
-        disruptorTemplate.onData(bean);
+        log.info("📩 消费成功 msgId={}", msg.getMsgId());
+        EntrustOrder entrustOrder = JSONUtil.toBean(body, EntrustOrder.class);
+        disruptorTemplate.onData(Order.entrustOrder2Order(entrustOrder));
         // TODO 撮合 状态流转
     }
 

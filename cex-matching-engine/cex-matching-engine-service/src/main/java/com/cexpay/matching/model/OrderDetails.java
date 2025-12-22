@@ -1,4 +1,4 @@
-package com.cexpay.matching.domain;
+package com.cexpay.matching.model;
 
 
 import lombok.AllArgsConstructor;

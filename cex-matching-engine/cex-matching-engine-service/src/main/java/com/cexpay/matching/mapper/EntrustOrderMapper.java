@@ -1,6 +1,6 @@
 package com.cexpay.matching.mapper;
 
-import com.cexpay.matching.domain.entity.EntrustOrder;
+import com.cexpay.matching.model.entity.EntrustOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

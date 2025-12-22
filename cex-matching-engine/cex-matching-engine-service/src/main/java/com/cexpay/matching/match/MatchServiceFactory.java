@@ -1,6 +1,6 @@
 package com.cexpay.matching.match;
 
-import com.cexpay.matching.enums.MatchStrategy;
+import com.cexpay.common.enums.MatchStrategy;
 
 import java.util.HashMap;
 import java.util.Map;

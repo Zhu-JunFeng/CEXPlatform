@@ -1,4 +1,4 @@
-package com.cexpay.matching.enums;
+package com.cexpay.common.enums;
 
 public enum MatchStrategy {
     // 现价交易

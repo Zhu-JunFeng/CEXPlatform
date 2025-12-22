@@ -1,4 +1,4 @@
-package com.cexpay.matching.domain.entity;
+package com.cexpay.matching.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

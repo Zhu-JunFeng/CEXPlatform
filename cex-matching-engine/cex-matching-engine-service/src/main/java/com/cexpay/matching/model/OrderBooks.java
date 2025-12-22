@@ -1,7 +1,8 @@
-package com.cexpay.matching.domain;
+package com.cexpay.matching.model;
 
 import cn.hutool.core.util.StrUtil;
-import com.cexpay.matching.enums.OrderDirection;
+import com.cexpay.common.enums.OrderDirection;
+import com.cexpay.common.model.TradePlate;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +47,16 @@ public class OrderBooks {
      */
     private int baseCoinScale;
 
+    /**
+     * 买方的盘口数据
+     */
+    private TradePlate buyTradePlate;
+
+    /**
+     * 卖方的盘口数据
+     */
+    private TradePlate sellTradePlate;
+
     private SimpleDateFormat dateFormat;
 
     public OrderBooks(String symbol) {
@@ -67,6 +78,8 @@ public class OrderBooks {
         log.info("Initializing OrderBooks symbol = {}", symbol);
         buyLimitPrice = new TreeMap<>(Comparator.reverseOrder()); // 价格从大到小
         sellLimitPrice = new TreeMap<>(Comparator.naturalOrder()); // 价格从小到大
+        buyTradePlate = new com.cexpay.common.model.TradePlate(OrderDirection.BUY, symbol); // 买方盘口数据
+        sellTradePlate = new com.cexpay.common.model.TradePlate(OrderDirection.SELL, symbol); // 卖方盘口数据
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
 
@@ -74,7 +87,7 @@ public class OrderBooks {
      * 获取但前的交易队列
      */
     public Map<BigDecimal, MergeOrder> getCurrentLimitPrices(OrderDirection direction) {
-        return direction == OrderDirection.BULL ? buyLimitPrice : sellLimitPrice;
+        return direction == OrderDirection.BUY ? buyLimitPrice : sellLimitPrice;
     }
 
     /**
@@ -123,7 +136,7 @@ public class OrderBooks {
      * 获取排在队列的第一数据
      */
     public Map.Entry<BigDecimal, MergeOrder> getBastSuitOrder(OrderDirection direction) {
-        return direction == OrderDirection.BULL ? buyLimitPrice.firstEntry() : sellLimitPrice.firstEntry();
+        return direction == OrderDirection.BUY ? buyLimitPrice.firstEntry() : sellLimitPrice.firstEntry();
     }
 
 }

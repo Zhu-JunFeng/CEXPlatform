@@ -1,20 +1,21 @@
-package com.cexpay.matching.enums;
+package com.cexpay.common.enums;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public enum OrderDirection {
 
-    BULL(1, "买入"),
+    BUY(1, "买入"),
     SELL(2, "卖出");
 
-    private int code;
+    private Integer code;
     private String desc;
 
-    public static OrderDirection getByCode(int code) {
+    public static OrderDirection getByCode(Integer code) {
         OrderDirection[] values = values();
         for (OrderDirection value : values) {
             if (value.code == code) {
@@ -24,19 +25,11 @@ public enum OrderDirection {
         return null;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 }

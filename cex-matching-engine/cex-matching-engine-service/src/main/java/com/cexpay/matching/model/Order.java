@@ -1,5 +1,6 @@
-package com.cexpay.matching.domain;
+package com.cexpay.matching.model;
 
+import com.cexpay.matching.model.entity.EntrustOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -78,7 +79,19 @@ public class Order {
     private List<OrderDetails> details;
 
     public boolean isCompleted() {
-        // todo
-        return false;
+        return amount.compareTo(BigDecimal.ZERO) <= 0;
+    }
+
+    public static Order entrustOrder2Order(EntrustOrder entrustOrder) {
+        Order order = new Order();
+        order.setOrderId(String.valueOf(entrustOrder.getId()));
+        order.setPrice(entrustOrder.getPrice());
+        order.setUserId(String.valueOf(entrustOrder.getUserId()));
+        order.setAmount(entrustOrder.getVolume().add(entrustOrder.getDeal().negate())); // 总数量 - 已成交数量
+        order.setSymbol(entrustOrder.getSymbol());
+        order.setTime(entrustOrder.getCreated().getTime());
+        order.setOrderDirection(entrustOrder.getType());
+
+        return order;
     }
 }

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cexpay.matching.mapper.EntrustOrderMapper">
 
-    <resultMap id="BaseResultMap" type="com.cexpay.matching.domain.entity.EntrustOrder">
+    <resultMap id="BaseResultMap" type="com.cexpay.matching.model.entity.EntrustOrder">
         <id property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="marketId" column="market_id"/>

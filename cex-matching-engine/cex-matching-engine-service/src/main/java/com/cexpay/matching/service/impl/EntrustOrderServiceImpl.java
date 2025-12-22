@@ -1,7 +1,7 @@
 package com.cexpay.matching.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cexpay.matching.domain.entity.EntrustOrder;
+import com.cexpay.matching.model.entity.EntrustOrder;
 import com.cexpay.matching.service.EntrustOrderService;
 import com.cexpay.matching.mapper.EntrustOrderMapper;
 import org.springframework.stereotype.Service;
