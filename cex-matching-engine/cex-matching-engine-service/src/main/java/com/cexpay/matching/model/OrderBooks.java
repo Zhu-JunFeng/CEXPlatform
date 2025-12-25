@@ -2,7 +2,6 @@ package com.cexpay.matching.model;
 
 import cn.hutool.core.util.StrUtil;
 import com.cexpay.common.enums.OrderDirection;
-import com.cexpay.common.model.TradePlate;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -78,8 +77,8 @@ public class OrderBooks {
         log.info("Initializing OrderBooks symbol = {}", symbol);
         buyLimitPrice = new TreeMap<>(Comparator.reverseOrder()); // 价格从大到小
         sellLimitPrice = new TreeMap<>(Comparator.naturalOrder()); // 价格从小到大
-        buyTradePlate = new com.cexpay.common.model.TradePlate(OrderDirection.BUY, symbol); // 买方盘口数据
-        sellTradePlate = new com.cexpay.common.model.TradePlate(OrderDirection.SELL, symbol); // 卖方盘口数据
+        buyTradePlate = new TradePlate(OrderDirection.BUY, symbol); // 买方盘口数据
+        sellTradePlate = new TradePlate(OrderDirection.SELL, symbol); // 卖方盘口数据
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
 
@@ -101,8 +100,8 @@ public class OrderBooks {
      * 添加订单
      */
     public void addOrder(Order order) {
-        Integer orderDirection = order.getOrderDirection();
-        Map<BigDecimal, MergeOrder> currentLimitPrices = getCurrentLimitPrices(OrderDirection.getByCode(orderDirection));
+        OrderDirection orderDirection = order.getOrderDirection();
+        Map<BigDecimal, MergeOrder> currentLimitPrices = getCurrentLimitPrices(orderDirection);
         MergeOrder mergeOrder = currentLimitPrices.get(order.getPrice());
         if (mergeOrder == null) {
             mergeOrder = new MergeOrder();
@@ -115,8 +114,8 @@ public class OrderBooks {
      * 取消订单
      */
     public void cancelOrder(Order order) {
-        Integer orderDirection = order.getOrderDirection();
-        Map<BigDecimal, MergeOrder> currentLimitPrices = getCurrentLimitPrices(OrderDirection.getByCode(orderDirection));
+        OrderDirection orderDirection = order.getOrderDirection();
+        Map<BigDecimal, MergeOrder> currentLimitPrices = getCurrentLimitPrices(orderDirection);
         MergeOrder mergeOrder = currentLimitPrices.get(order.getPrice());
         if (mergeOrder != null) {
             Iterator<Order> iterator = mergeOrder.iterator();

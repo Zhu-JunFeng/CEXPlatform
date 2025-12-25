@@ -2,6 +2,8 @@ package com.cexpay.common.model;
 
 import lombok.Data;
 
+import com.cexpay.common.enums.OrderDirection;
+
 import java.math.BigDecimal;
 
 /**
@@ -18,7 +20,7 @@ public class ExchangeTrade {
     /**
      * 订单方向
      */
-    private String direction;
+    private OrderDirection direction;
 
     /**
      * 本次交易的价格

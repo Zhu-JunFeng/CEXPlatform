@@ -1,5 +1,6 @@
 package com.cexpay.matching.model;
 
+import com.cexpay.common.enums.OrderDirection;
 import com.cexpay.matching.model.entity.EntrustOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -64,7 +65,7 @@ public class Order {
     /**
      * 订单方向
      */
-    private Integer orderDirection;
+    private OrderDirection orderDirection;
 
     /**
      * 挂单价格
@@ -90,7 +91,7 @@ public class Order {
         order.setAmount(entrustOrder.getVolume().add(entrustOrder.getDeal().negate())); // 总数量 - 已成交数量
         order.setSymbol(entrustOrder.getSymbol());
         order.setTime(entrustOrder.getCreated().getTime());
-        order.setOrderDirection(entrustOrder.getType());
+        order.setOrderDirection(OrderDirection.getByCode(entrustOrder.getType()));
 
         return order;
     }

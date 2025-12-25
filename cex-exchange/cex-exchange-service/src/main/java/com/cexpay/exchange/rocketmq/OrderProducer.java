@@ -1,7 +1,7 @@
 package com.cexpay.exchange.rocketmq;
 
 import cn.hutool.json.JSONUtil;
-import com.cexpay.exchange.model.OrderMessage;
+import com.cexpay.common.model.OrderMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;

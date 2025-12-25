@@ -1,4 +1,4 @@
-package com.cexpay.matching.rocket;
+package com.cexpay.matching.rocketmq;
 
 import cn.hutool.json.JSONUtil;
 import com.cexpay.matching.disruptor.DisruptorTemplate;

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +20,7 @@ public enum OrderDirection {
     public static OrderDirection getByCode(Integer code) {
         OrderDirection[] values = values();
         for (OrderDirection value : values) {
-            if (value.code == code) {
+            if (Objects.equals(value.code, code)) {
                 return value;
             }
         }
